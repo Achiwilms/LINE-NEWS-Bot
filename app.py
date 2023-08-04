@@ -76,15 +76,12 @@ def handle_sticker_message(event):
     user_id = event.source.user_id
     # message log 
     print(f'{user_id}: has a message')
-    # turn sticker message to dictionary
-    sticker_msg = json.loads(event.message)
-    print(type(sticker_msg))
-    print(sticker_msg)
-    
+    print(type(event.message['keywords']))
+
     # sticker has keywords
-    if sticker_msg.get("keywords") is not None:
+    if event.message['keywords'] is not None:
         # take the first sticker keyword as message
-        msg = "我感到" + ', '.join([keyword for keyword in sticker_msg['keywords']])
+        msg = "我感到" + ', '.join([keyword for keyword in event.message['keywords']])
         # user's message history in MongoDB
         mongodb_message_history = MongoDBChatMessageHistory(
         connection_string=mongo_connection_str, session_id="main", collection_name=user_id
