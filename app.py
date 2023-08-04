@@ -76,6 +76,7 @@ def handle_sticker_message(event):
     user_id = event.source.user_id
     # message log 
     print(f'{user_id}: has a message')
+    print(event.message['keywords'])
     print(type(event.message['keywords']))
 
     # sticker has keywords
