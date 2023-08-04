@@ -48,10 +48,10 @@ def callback():
 def handle_text_message(event):
     # user ID
     user_id = event.source.user_id
-    # message
-    msg = event.message.text.strip()
     # message log 
     print(f'{user_id}: has a message')
+    # message
+    msg = event.message.text.strip()
 
     # user's message history in MongoDB
     mongodb_message_history = MongoDBChatMessageHistory(
@@ -74,17 +74,15 @@ def handle_text_message(event):
 def handle_sticker_message(event):
     # user ID
     user_id = event.source.user_id
-    # message
-    msg = event.message.text.strip()
     # message log 
     print(f'{user_id}: has a message')
+    # take the second sticker keyword as message
+    msg = event.message['keywords'][1]
 
     # user's message history in MongoDB
     mongodb_message_history = MongoDBChatMessageHistory(
     connection_string=mongo_connection_str, session_id="main", collection_name=user_id
     )
-    # take the second sticker keyword as message
-    msg = event.message['keywords'][1]
     
     # generate reply
     reply = chain_response(chain, mongodb_message_history, msg)
