@@ -72,8 +72,24 @@ def handle_text_message(event):
 # handle sticker message
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
-    print(event.message)
-    reply = "我看不懂貼圖 U+1F605"
+    # user ID
+    user_id = event.source.user_id
+    # message
+    msg = event.message.text.strip()
+    # message log 
+    print(f'{user_id}: has a message')
+
+    # user's message history in MongoDB
+    mongodb_message_history = MongoDBChatMessageHistory(
+    connection_string=mongo_connection_str, session_id="main", collection_name=user_id
+    )
+    # take the second sticker keyword as message
+    msg = event.message['keywords'][1]
+    
+    # generate reply
+    reply = chain_response(chain, mongodb_message_history, msg)
+    
+    # send reply to user
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
 # make url discoverable
