@@ -1,4 +1,4 @@
-import os
+import os, json
 
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -76,20 +76,22 @@ def handle_sticker_message(event):
     user_id = event.source.user_id
     # message log 
     print(f'{user_id}: has a message')
-    # sticker message
-    print(event.message)
+    # turn sticker message to dictionary
+    sticker_msg = json.loads(event.message)
+    print(type(sticker_msg))
+    print(sticker_msg)
     
-    # sticker dictionary contains keywords
-    if event.message.get("keywords") is not None:
+    # sticker has keywords
+    if sticker_msg.get("keywords") is not None:
         # take the first sticker keyword as message
-        msg = "我感到" + ', '.join([keyword for keyword in event.message['keywords']])
+        msg = "我感到" + ', '.join([keyword for keyword in sticker_msg['keywords']])
         # user's message history in MongoDB
         mongodb_message_history = MongoDBChatMessageHistory(
         connection_string=mongo_connection_str, session_id="main", collection_name=user_id
         )
         # generate reply
         reply = chain_response(chain, mongodb_message_history, msg)
-    # sticker dictionary doesn't contain keywords
+    # sticker doesn't have keywords
     else:
         reply = "很抱歉，我看不懂這個貼圖"
     
