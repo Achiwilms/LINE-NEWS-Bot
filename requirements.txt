@@ -1,4 +1,7 @@
 line-bot-sdk
 flask
 openai
+langchain
+tiktoken
+pymongo
 gunicorn
