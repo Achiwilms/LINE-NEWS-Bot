@@ -76,8 +76,10 @@ def handle_sticker_message(event):
     user_id = event.source.user_id
     # message log 
     print(f'{user_id}: has a message')
-    # take the second sticker keyword as message
-    msg = "我對你的回覆感到" + event.message['keywords'][1]
+    # sticker message
+    print(event.message)
+    # take the first sticker keyword as message
+    msg = "我對你的回覆感到" + event.message['keywords'][0]
 
     # user's message history in MongoDB
     mongodb_message_history = MongoDBChatMessageHistory(
