@@ -3,7 +3,7 @@ from src.news.sources.other_website import other_website
 
 def extract_news(url):
     # Yahoo news
-    if "news.yahoo.com" in url:
+    if (("news.yahoo.com" in url) or ("ynews" in url)):
         return yahoo_news(url)
     # other website
     else:        
