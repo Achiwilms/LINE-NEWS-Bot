@@ -1,14 +1,16 @@
-import os, json
+import os, re
+from langchain.memory import MongoDBChatMessageHistory
+from src.build_ChatChain import build_chat_chain
+from src.build_NewsChain import build_news_chain
+from src.chain_response import chain_response
+from src.history.clear_history import clear_history
+from src.news.extract_news import extract_news
 
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerMessage
 
-from langchain.memory import MongoDBChatMessageHistory
-from src.build_LLMChain import build_chain
-from src.chain_response import chain_response
-from src.history.clear_history import clear_history
 
 # LINE keys
 line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
@@ -25,8 +27,14 @@ temperature = float(os.getenv('TEMPERATURE'))
 # Application
 app = Flask(__name__)
 
-# build a conversation chain
-chain = build_chain(openai_api_key, max_token_limit, temperature)
+# Define the pattern
+url_regex = re.compile(r'https?://\S+')
+
+# build chat chain
+chat_chain = build_chat_chain(openai_api_key, max_token_limit, temperature)
+
+# build news chain
+news_chain = build_news_chain(openai_api_key, max_token_limit, temperature)
 
 
 @app.route("/callback", methods=['POST'])
@@ -51,7 +59,7 @@ def handle_text_message(event):
     # message log 
     print(f'{user_id}: has a message')
     # message
-    msg = event.message.text.strip()
+    msg = event.message.text
 
     # user's message history in MongoDB
     mongodb_message_history = MongoDBChatMessageHistory(
@@ -62,10 +70,22 @@ def handle_text_message(event):
         # clear history
         clear_history(mongodb_message_history)
         reply = "對話歷史已清除"
-    # normal message
+    # conversation
     else:
-        # generate reply
-        reply = chain_response(chain, mongodb_message_history, msg)
+        # if the string contains a URL
+        if url_regex.search(msg):
+            # Find the first URL in the message
+            url = url_regex.search(msg).group()
+            # extract news 
+            news = extract_news(url)
+            print(f"{news}")
+            # generate chain response
+            reply = chain_response(news_chain, mongodb_message_history, news)                        
+        # normal conversation
+        else:
+            # generate chain response
+            reply = chain_response(chat_chain, mongodb_message_history, msg)
+
     # send reply to user
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
