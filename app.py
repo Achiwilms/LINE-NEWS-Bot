@@ -81,9 +81,6 @@ def handle_text_message(event):
             news = extract_news(url)
             print(f"{news}")
 
-            # send the news extracted to user
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=news+"\n==================\n收到! 閱讀這篇報導中"))
-
             # generate chain response
             reply = chain_response(news_chain, mongodb_message_history, news)                        
         # normal conversation
