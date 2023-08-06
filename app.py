@@ -70,6 +70,10 @@ def handle_text_message(event):
         # clear history
         clear_history(mongodb_message_history)
         reply = "對話歷史已清除"
+        # send reply to user 
+        reply_message = [
+            TextSendMessage(text=reply)
+        ]
     # conversation
     else:
         # if the string contains a URL
@@ -88,11 +92,11 @@ def handle_text_message(event):
             # generate chain response
             reply = chain_response(chat_chain, mongodb_message_history, msg)
 
-    # send reply to user (both news and chain response)
-    reply_message = [
-        TextSendMessage(text=news),
-        TextSendMessage(text=reply)
-    ]
+        # send reply to user (both news and chain response)
+        reply_message = [
+            TextSendMessage(text=news),
+            TextSendMessage(text=reply)
+        ]
     line_bot_api.reply_message(event.reply_token, reply_message)
 
 # handle sticker message
