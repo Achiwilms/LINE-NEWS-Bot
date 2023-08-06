@@ -110,7 +110,7 @@ def handle_sticker_message(event):
         connection_string=mongo_connection_str, session_id="main", collection_name=user_id
         )
         # generate reply
-        reply = chain_response(chain, mongodb_message_history, msg)
+        reply = chain_response(chat_chain, mongodb_message_history, msg)
     # sticker doesn't have keywords
     else:
         reply = "很抱歉，我看不懂這個貼圖"
