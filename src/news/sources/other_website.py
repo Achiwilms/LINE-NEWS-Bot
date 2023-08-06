@@ -20,5 +20,5 @@ def other_website(url):
         article = ""
 
     # news
-    news = "標題:\n"+title+"\n內文:\n"+article 
+    news = "***\n標題:\n"+title+"\n內文:\n"+article+"\n***\n" 
     return news

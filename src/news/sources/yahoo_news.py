@@ -22,5 +22,5 @@ def yahoo_news(url):
     article = ''.join([piece.text for piece in pieces])
     
     # news
-    news = "標題:\n"+title+"\n內文:\n"+article 
+    news = "***\n標題:\n"+title+"\n內文:\n"+article+"\n***\n"
     return news
