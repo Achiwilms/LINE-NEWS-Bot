@@ -89,7 +89,7 @@ def handle_text_message(event):
             reply = chain_response(chat_chain, mongodb_message_history, msg)
 
     # send reply to user 
-    line_bot_api.reply_message(event.reply_token, reply)
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
 # handle sticker message
 @handler.add(MessageEvent, message=StickerMessage)
