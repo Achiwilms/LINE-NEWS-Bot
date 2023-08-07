@@ -10,14 +10,14 @@ def other_website(url):
     if doc.find('h1'):
         title = doc.find('h1').text.strip()
     else:
-        title = ""
+        raise Exception("找不到報導")
 
     # find article (simply join all paragraph)
     if doc.find('p'):
         pieces = doc.find_all('p')
         article = ''.join([piece.text.strip() for piece in pieces])
     else:
-        article = ""
+        raise Exception("找不到報導")
 
     # news
     news = "標題:\n"+title+"\n內文:\n"+article 

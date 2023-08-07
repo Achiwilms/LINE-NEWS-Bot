@@ -73,7 +73,7 @@ def handle_text_message(event):
             clear_history(mongodb_message_history)
             reply = "對話歷史清除完畢，新對話已開始"
         # manually input news
-        elif (msg.startswith("報導:")):
+        elif (msg.startswith("標題:")):
             # generate chain response
             reply = chain_response(news_chain, mongodb_message_history, msg[3:].strip())
         # conversation
@@ -98,9 +98,15 @@ def handle_text_message(event):
     except openai.error.InvalidRequestError as e:
         error_msg = str(e)
         if (error_msg.startswith("This model's maximum context length is 4097 tokens")):
-            reply = "對話與報導內容過長，請輸入'開啟新對話'後重試"
+            reply = '對話與報導內容過長，請輸入"開啟新對話"後重試'
         else: 
             reply = error_msg
+            
+    # can't find news error
+    except Exception as e:
+        error_msg = str(e)
+        if error_msg=="找不到報導":
+            reply = "抱歉，我找不到報導。請確認連結是否正確。\n此外，你也可以直接將報導內容提供給我。輸入格式為:\n標題:\n[報導標題]\n內文:\n[報導內文]"
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
