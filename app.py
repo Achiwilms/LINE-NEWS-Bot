@@ -72,6 +72,10 @@ def handle_text_message(event):
             # clear history
             clear_history(mongodb_message_history)
             reply = "對話歷史清除完畢，新對話已開始"
+        # manually input report
+        elif (msg.startswith("報導:")):
+            # generate chain response
+            reply = chain_response(news_chain, mongodb_message_history, msg)
         # conversation
         else:
             # if the string contains a URL
