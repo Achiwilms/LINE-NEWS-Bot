@@ -80,9 +80,6 @@ def handle_text_message(event):
         else:
             # if the string contains a URL
             if url_regex.search(msg):
-                # push message to tell user the bot is reading
-                line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中🔎"))
-
                 # clear history (since it's a new url, very possible a new conversation)
                 clear_history(mongodb_message_history)
 
@@ -92,6 +89,9 @@ def handle_text_message(event):
                 # extract news 
                 news = extract_news(url)
                 print(f"{news}")
+                
+                # push message to tell user the bot is reading
+                line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中..."))
 
                 # generate chain response
                 reply = chain_response(news_chain, mongodb_message_history, news)                        
