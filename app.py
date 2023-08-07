@@ -1,4 +1,4 @@
-import os, re
+import os, re, openai
 from langchain.memory import MongoDBChatMessageHistory
 from src.build_ChatChain import build_chat_chain
 from src.build_NewsChain import build_news_chain
@@ -65,29 +65,38 @@ def handle_text_message(event):
     mongodb_message_history = MongoDBChatMessageHistory(
     connection_string=mongo_connection_str, session_id="main", collection_name=user_id
     )
-    # request to clear message history
-    if (msg == "清除歷史"):
-        # clear history
-        clear_history(mongodb_message_history)
-        reply = "對話歷史已清除"
-    # conversation
-    else:
-        # if the string contains a URL
-        if url_regex.search(msg):
-            # Find the first URL in the message
-            url = url_regex.search(msg).group()
 
-            # extract news 
-            news = extract_news(url)
-            print(f"{news}")
-
-            # generate chain response
-            reply = chain_response(news_chain, mongodb_message_history, news)                        
-        # normal conversation
+    try:
+        # request to clear message history
+        if (msg == "開啟新對話"):
+            # clear history
+            clear_history(mongodb_message_history)
+            reply = "對話歷史清除完畢，新對話已開始"
+        # conversation
         else:
-            # generate chain response
-            reply = chain_response(chat_chain, mongodb_message_history, msg)
+            # if the string contains a URL
+            if url_regex.search(msg):
+                # Find the first URL in the message
+                url = url_regex.search(msg).group()
 
+                # extract news 
+                news = extract_news(url)
+                print(f"{news}")
+
+                # generate chain response
+                reply = chain_response(news_chain, mongodb_message_history, news)                        
+            # normal conversation
+            else:
+                # generate chain response
+                reply = chain_response(chat_chain, mongodb_message_history, msg)
+
+    # openai error
+    except openai.error.InvalidRequestError as e:
+        error_msg = str(e)
+        if (error_msg.startswith("This model's maximum context length is 4097 tokens")):
+            reply = "對話與報導內容過長，請輸入'開啟新對話'後重試"
+        else: 
+            reply = error_msg
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
