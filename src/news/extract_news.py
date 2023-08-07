@@ -5,7 +5,7 @@ from src.news.sources.other_website import other_website
 
 def extract_news(url):
     # Yahoo news
-    if (("news.yahoo.com" in url) or ("ynews" in url)):
+    if (("yahoo.com" in url) or ("ynews" in url)):
         return yahoo_news(url)
     # LINE short url
     elif "liff.line" in url:
