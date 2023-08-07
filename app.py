@@ -83,6 +83,9 @@ def handle_text_message(event):
                 # push message to tell user the bot is reading
                 line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中..."))
 
+                # clear history (since it's a new url, very possible a new conversation)
+                clear_history(mongodb_message_history)
+
                 # Find the first URL in the message
                 url = url_regex.search(msg).group()
 
