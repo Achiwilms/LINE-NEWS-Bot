@@ -1,13 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-# filter for article element
+# filter for article element for yahoo
 def filter_yahoo(element):
     if element.name == 'p' and not element.find('br'):
         return True
     return False
 
-# extract new from yahoo.com
+# extract news from yahoo.com
 def yahoo_news(url):
     hotpage = requests.get(url)
     doc = BeautifulSoup(hotpage.text, 'html.parser')
