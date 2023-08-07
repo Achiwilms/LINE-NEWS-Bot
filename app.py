@@ -73,7 +73,7 @@ def handle_text_message(event):
             clear_history(mongodb_message_history)
             reply = "對話歷史清除完畢，新對話已開始"
         # manually input news
-        elif (msg.startswith("標題")):
+        elif (msg.startswith("標題：")):
             # generate chain response
             reply = chain_response(news_chain, mongodb_message_history, msg[3:].strip())
         # conversation
