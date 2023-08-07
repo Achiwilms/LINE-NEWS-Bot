@@ -106,7 +106,7 @@ def handle_text_message(event):
     except Exception as e:
         error_msg = str(e)
         if error_msg=="找不到報導":
-            reply = "抱歉，我找不到報導。請確認連結是否正確。\n此外，你也可以直接將報導內容提供給我。輸入格式為:\n標題:\n[報導標題]\n內文:\n[報導內文]"
+            reply = "抱歉，我找不到報導。請確認連結是否正確。\n\n此外，你也可以直接將報導內容提供給我。輸入格式為:\n\n標題:\n[報導標題]\n內文:\n[報導內文]"
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
 
