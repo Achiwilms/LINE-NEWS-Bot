@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # filter for article element
-def filter_yahoo_paragraph(element):
+def filter_yahoo(element):
     if element.name == 'p' and not element.find('br'):
         return True
     return False
@@ -14,13 +14,12 @@ def yahoo_news(url):
 
     # find title
     doc_title = doc.find('div', class_='caas-title-wrapper')
-    title = doc_title.find('h1').text
+    title = doc_title.find('h1').text.strip()
 
     # find article
-    doc_art = doc.find('div', class_='caas-body')
-    pieces = doc_art.find_all(filter_yahoo_paragraph)
+    pieces = doc.find('div', class_='caas-body').find_all(filter_yahoo)
     article = ''.join([piece.text for piece in pieces])
     
     # news
-    news = "***\n標題:\n"+title+"\n內文:\n"+article+"\n***\n"
+    news = "標題:\n"+title+"\n內文:\n"+article
     return news

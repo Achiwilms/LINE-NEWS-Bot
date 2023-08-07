@@ -25,7 +25,7 @@ def build_news_chain(openai_api_key, max_token_limit, temperature):
     human_message_prompt = HumanMessagePromptTemplate(
         prompt=PromptTemplate(
             input_variables=["message"],
-            template="{message}請問你認為這篇報導是否公正客觀？請就其中的標題、觀點和呈現方式提供你的看法。論述至少要有三段。",
+            template="***\n{message}\n***\n請問你認為這篇報導是否公正客觀？請就其中的標題、觀點和呈現方式提供你的看法。論述至少要有三段。",
         )
     )
     # memory prompt

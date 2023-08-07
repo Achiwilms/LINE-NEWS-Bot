@@ -8,7 +8,7 @@ def other_website(url):
 
     # find title (simply find h1)
     if doc.find('h1'):
-        title = doc.find('h1').text
+        title = doc.find('h1').text.strip()
     else:
         title = ""
 
@@ -20,5 +20,5 @@ def other_website(url):
         article = ""
 
     # news
-    news = "***\n標題:\n"+title+"\n內文:\n"+article+"\n***\n" 
+    news = "標題:\n"+title+"\n內文:\n"+article 
     return news
