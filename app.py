@@ -75,7 +75,7 @@ def handle_text_message(event):
         # manually input news
         elif (msg.startswith("報導:")):
             # generate chain response
-            reply = chain_response(news_chain, mongodb_message_history, msg)
+            reply = chain_response(news_chain, mongodb_message_history, msg[3:].strip())
         # conversation
         else:
             # if the string contains a URL
