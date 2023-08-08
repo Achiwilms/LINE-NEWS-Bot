@@ -59,7 +59,7 @@ def handle_text_message(event):
     # message log 
     print(f'{user_id}: has a message')
     # message
-    msg = event.message.text
+    msg = event.message.text.strip()
 
     # user's message history in MongoDB
     mongodb_message_history = MongoDBChatMessageHistory(
@@ -104,7 +104,7 @@ def handle_text_message(event):
     except openai.error.InvalidRequestError as e:
         error_msg = str(e)
         if (error_msg.startswith("This model's maximum context length is 4097 tokens")):
-            reply = "很抱歉😣，目前系統還無法支援這個網站。不過，你可以將這個網站資訊反映給我們，我們會盡速處理並提供支援。謝謝！\n\n此外，你也可以直接將報導內容提供給我。輸入格式為:\n\n標題：\n[報導標題]\n內文：\n[報導內文]"
+            reply = "抱歉😣 目前系統還無法支援這個網站。\n\n不過，你可以將這個網站資訊反映給我們，我們會盡速處理並提供支援。謝謝！\n\n此外，你也可以直接輸入報導內容。輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]"
         else: 
             reply = error_msg
             
@@ -112,7 +112,7 @@ def handle_text_message(event):
     except Exception as e:
         error_msg = str(e)
         if error_msg=="找不到報導":
-            reply = "很抱歉😣，目前系統還無法支援這個網站。不過，你可以將這個網站資訊反映給我們，我們會盡速處理並提供支援。謝謝！\n\n此外，你也可以直接將報導內容提供給我。輸入格式為:\n\n標題：\n[報導標題]\n內文：\n[報導內文]"
+            reply = "抱歉😣 目前系統還無法支援這個網站。\n\n不過，你可以將這個網站資訊反映給我們，我們會盡速處理並提供支援。謝謝！\n\n此外，你也可以直接輸入報導內容。輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]"
 
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
@@ -139,7 +139,7 @@ def handle_sticker_message(event):
         reply = chain_response(chat_chain, mongodb_message_history, msg)
     # sticker doesn't have keywords
     else:
-        reply = "很抱歉，我看不懂這個貼圖"
+        reply = "抱歉，我看不懂這個貼圖😅 能傳別的貼圖嗎?"
     
     # send reply to user
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
