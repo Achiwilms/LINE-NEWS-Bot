@@ -113,6 +113,8 @@ def handle_text_message(event):
         error_msg = str(e)
         if error_msg=="找不到報導":
             reply = "抱歉😅 目前還不支援這個網站。\n\n你可以將這個網站的資訊反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]"
+        else:
+            reply = error_msg
 
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
