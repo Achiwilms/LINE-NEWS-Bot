@@ -91,7 +91,7 @@ def handle_text_message(event):
                 print(f"{news}")
                 
                 # push message to tell user the bot is reading
-                # line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中..."))
+                line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中..."))
 
                 # generate chain response
                 reply = chain_response(news_chain, mongodb_message_history, news)                        
@@ -118,14 +118,6 @@ def handle_text_message(event):
 
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
-
-# handle reading news reply
-@handler.add(MessageEvent, message=TextMessage)
-def reading_news_reply(event):
-    msg = event.message.text.strip()
-    if url_regex.search(msg):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="收到！正在閱讀報導中..."))
-    return
 
 # handle sticker message
 @handler.add(MessageEvent, message=StickerMessage)
