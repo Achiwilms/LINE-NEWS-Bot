@@ -91,7 +91,7 @@ def handle_text_message(event):
                 print(f"{news}")
                 
                 # push message to tell user the bot is reading
-                line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中..."))
+                # line_bot_api.push_message(user_id, TextSendMessage(text="收到！正在閱讀報導中..."))
 
                 # generate chain response
                 reply = chain_response(news_chain, mongodb_message_history, news)                        
@@ -104,12 +104,12 @@ def handle_text_message(event):
     except openai.error.InvalidRequestError as e:
         error_msg = str(e)
         if (error_msg.startswith("This model's maximum context length is 4097 tokens")):
-            reply = '抱歉😅 閱讀過程中發生錯誤，原因可能是:\n 1.對話與報導內容過長，請輸入"開啟新對話"後重試\n2.目前還不支援這個網站。你可以將這個網站的資訊反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]'
+            reply = '抱歉😅 閱讀過程中發生錯誤，原因可能是:\n1.對話與報導內容過長，請輸入"開啟新對話"後重試\n2.目前還不支援這個網站。你可以將這個網站的資訊反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]'
         else: 
             reply = error_msg
             
-    # can't find news error
     except Exception as e:
+        # can't find news error
         error_msg = str(e)
         if error_msg=="找不到報導":
             reply = "抱歉😅 目前還不支援這個網站。\n\n你可以將這個網站的資訊反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]"
@@ -118,6 +118,14 @@ def handle_text_message(event):
 
     # send reply to user 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+
+# handle reading news reply
+@handler.add(MessageEvent, message=TextMessage)
+def reading_news_reply(event):
+    msg = event.message.text.strip()
+    if url_regex.search(msg):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="收到！正在閱讀報導中..."))
+    return
 
 # handle sticker message
 @handler.add(MessageEvent, message=StickerMessage)

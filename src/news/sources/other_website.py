@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-# extract news from websites not listed
+# extract news from websites not listed (this works for most sites)
 def other_website(url):
     hotpage = requests.get(url)
     doc = BeautifulSoup(hotpage.text, 'html.parser')
