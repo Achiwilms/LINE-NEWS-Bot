@@ -104,7 +104,7 @@ def handle_text_message(event):
     except openai.error.InvalidRequestError as e:
         error_msg = str(e)
         if (error_msg.startswith("This model's maximum context length is 4097 tokens")):
-            reply = '抱歉😅 閱讀過程中發生錯誤，原因可能是:\n1.對話與報導內容過長，請輸入"開啟新對話"後重試\n2.目前還不支援這個網站。你可以將這個網站的資訊反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]'
+            reply = '抱歉😅 閱讀過程中發生錯誤，原因可能是:\n1.對話與報導內容過長，請輸入"開啟新對話"後重試\n2.目前還不支援這個網站。你可以將這個網站的資訊由此意見表單(https://forms.gle/q9XcJyRm9d2d9iBP7)反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]'
         else: 
             reply = error_msg
             
@@ -112,7 +112,7 @@ def handle_text_message(event):
         # can't find news error
         error_msg = str(e)
         if error_msg=="找不到報導":
-            reply = "抱歉😅 目前還不支援這個網站。\n\n你可以將這個網站的資訊反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]"
+            reply = "抱歉😅 目前還不支援這個網站。\n\n你可以將這個網站的資訊由此意見表單(https://forms.gle/q9XcJyRm9d2d9iBP7)反映給我們，我們會盡速處理並提供支援🔧\n\n此外，你也可以直接輸入報導內容，輸入格式為:\n\n標題：\n[報導標題]\n\n內文：\n[報導內文]"
         else:
             reply = error_msg
 
