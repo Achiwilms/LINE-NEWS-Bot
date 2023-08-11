@@ -39,6 +39,6 @@ def build_chat_chain(openai_api_key, max_token_limit, temperature):
         llm=llm,
         prompt=chat_prompt,
         memory=ConversationTokenBufferMemory(llm=llm, memory_key="chat_history", max_token_limit=max_token_limit, return_messages=True),
-        verbose=True,
+        verbose=False,
     )
     return chain

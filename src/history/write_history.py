@@ -13,12 +13,12 @@ def write_history(chain, mongodb_message_history):
         # write all chain memory to MongoDB
         for memory in chain.memory.chat_memory.messages:
             mongodb_message_history.add_message(memory)
-        print("Clear Mongo and Write all")
+        # print("Clear Mongo and Write all")
     # Mongo memory is empty or chain memory is not flushed 
     else:
         # write last two chain memory to MongoDB
         for memory in chain.memory.chat_memory.messages[-2:]:
             mongodb_message_history.add_message(memory)
-        print("Write last two msg to Mongo")
+        # print("Write last two msg to Mongo")
         
     return
