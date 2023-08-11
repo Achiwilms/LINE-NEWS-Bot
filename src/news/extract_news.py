@@ -2,6 +2,7 @@ from src.news.sources.yahoo_news import yahoo_news
 from src.news.sources.line_short_url import line_short_url
 from src.news.sources.line_news import line_news
 from src.news.sources.now_news import now_news
+from src.news.sources.ettoday_news import ettoday_news
 from src.news.sources.other_website import other_website
 
 def extract_news(url):
@@ -20,6 +21,10 @@ def extract_news(url):
     # Now news
     elif "nownews.com" in url:
         return now_news(url)
+    
+    # ettoday news (not include forum)
+    elif (("ettoday.net" in url) and not("forum.ettoday" in url)):
+        return ettoday_news(url)
     
     # other website
     else:        
