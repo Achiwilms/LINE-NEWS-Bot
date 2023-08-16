@@ -14,7 +14,7 @@
 另外，因為機器人是由與ChatGPT相同的GPT-3.5所驅動 🧠，所以如果你只是想輕鬆地跟我聊天，或想問新聞以外的問題，都是可以的喔！
 
 <p align="center">
-    <img src="https://hackmd.io/_uploads/S1zr00Fnn.gif" alt="GUI" width="200">
+    <img src="https://github.com/Achiwilms/LINE-NEWS-Bot/blob/main/icon/demo.gif?raw=true" alt="GUI" width="200">
 </p>
 
 
