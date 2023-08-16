@@ -4,7 +4,7 @@
 
 一個提供新聞觀點的LINE對話機器人: AI, 你怎麼看?
 
-(click [here](README_en.md) to view English version of README)
+(Please click [here](README_en.md) to access the English version of the README)
 
 ## 介紹
 
@@ -73,6 +73,6 @@ OpenAI API回應溫度, 介於0到2, 可參考 [API reference- OpenAI API](https
 ## License
 [MIT License](https://choosealicense.com/licenses/mit/)
 
-此專案的彈性與可擴充性我想是蠻大的。因為只要改個prompt馬上就能變另一種用途的機器人，而且使用了[LangChain](https://github.com/langchain-ai/langchain) 框架，要加上embedding query等進階功能都不是難事。
+此專案的彈性與可擴充性我想是蠻大的。因為只要改個prompt馬上就能變另一種用途的機器人，而且使用了LangChain框架，要加上embedding query等進階功能都不是難事。
 
 歡迎使用此專案的程式碼，發揮想像力造出各種好用的對話機器人。
