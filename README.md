@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/pypi/l/ansicolortags.svg)](LICENSE) 
 
 
-一個提供新聞觀點的LINE對話機器人: AI, 你怎麼看?
+提供新聞觀點的LINE智能對話機器人: AI, 你怎麼看?
 
 (Please click [here](README_en.md) to access the English version of the README)
 
