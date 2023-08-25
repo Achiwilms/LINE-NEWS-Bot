@@ -16,7 +16,7 @@
 
 當然，不要完全接受它的意見，因為AI很容易出錯，評論也時常不正義😅  這不是什麼專業新聞評論，AI的看法僅供參考，請勿過於認真⚠️
 
-另外，因為機器人是由與ChatGPT相同的GPT-3.5所驅動 🧠，所以如果你只是想輕鬆地跟我聊天，或想問新聞以外的問題，都是可以的喔！
+另外，因為機器人是由與ChatGPT相同的GPT-3.5所驅動 🧠，所以如果你只是想輕鬆地跟它聊天，或想問新聞以外的問題，都是可以的。
 
 <p align="center">
     <img src="https://github.com/Achiwilms/LINE-NEWS-Bot/blob/main/icon/demo.gif?raw=true" alt="GUI" width="200">
