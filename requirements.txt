@@ -1,7 +1,7 @@
 line-bot-sdk
 flask
 openai==0.27.8
-langchain==0.0.317
+langchain==0.0.325
 tiktoken==0.4.0
 pymongo==4.4.1
 requests==2.31.0
